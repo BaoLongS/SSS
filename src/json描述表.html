@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SSS(Software's System)——使用json描述系统数据库中的表</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/angular.js/1.5.8/angular.js"></script>
+
+    <!--<link href="js/bootstrap/css/bootstrap.css" rel="stylesheet">-->
+    <!--<script src="js/jquery/jquery-1.12.4.min.js"></script>-->
+    <!--<script src="js/bootstrap/js/bootstrap.js"></script>-->
+    <!--<script src="js/angular/angular.min.js"></script>-->
+
+    <style>
+        select, input[type=text] {
+            width: 8rem;
+        }
+
+        .sss-table {
+            border: solid lightblue;
+        }
+
+        #showSSSJson {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        #massageDiv {
+            height: 20rem;
+        }
+
+        .panel-group {
+            margin-bottom: 4px;
+        }
+
+        .modal-content {
+            border-radius: 10px;
+        }
+
+        .modal-header {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .modal-footer {
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .form-control {
+            margin-bottom: 4px;
+        }
+    </style>
+
+    <script>
+        /**
+         * json描述表实例数据
+         *
+         * */
+        var system = {
+            "systemName": "学生选课系统",
+            "tables": [
+                {
+                    "uuid": "ceba4516491cc84042d442f84c29a541",
+                    "name": "学生",
+                    "code": "student",
+                    "keys": [
+                        {
+                            "uuid": "4019eafe2d2a64b2ce848207f0374567",
+                            "name": "ID主键",
+                            "code": "id",
+                            "type": "0",
+                            "comment": "主键"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "uuid": "b6f0dfbc65ea981538a6452b0142a095",
+                            "order": 1,
+                            "name": "学生姓名",
+                            "code": "name",
+                            "type": "2",
+                            "length": 20,
+                            "decimalPoint": 0,
+                            "default": "noname",
+                            "canNull": false,
+                            "comment": "姓名"
+                        },
+                        {
+                            "uuid": "3331ce04609fffcd04462ed89e018c23",
+                            "order": 2,
+                            "name": "学号",
+                            "code": "number",
+                            "type": "2",
+                            "length": 0,
+                            "decimalPoint": 0,
+                            "default": "000000",
+                            "canNull": false,
+                            "comment": "学号，唯一"
+                        },
+                        {
+                            "uuid": "061dcf6d8220bf9ad0c14da4d37dcbe0",
+                            "order": 3,
+                            "name": "年龄",
+                            "code": "age",
+                            "type": "0",
+                            "length": 0,
+                            "decimalPoint": 0,
+                            "default": "0",
+                            "canNull": false,
+                            "comment": "年龄，数字"
+                        },
+                        {
+                            "uuid": "5f9c8c51798032cc2eb0a99e7d25f290",
+                            "order": 4,
+                            "name": "生日",
+                            "code": "birthday",
+                            "type": "4",
+                            "length": 0,
+                            "decimalPoint": 0,
+                            "default": "0000-00-00",
+                            "canNull": false,
+                            "comment": "日期时间类型"
+                        }
+                    ],
+                    "comment": "学生表"
+                },
+                {
+                    "uuid": "8ab26ccef1deb0eeab33d82e1ad8f449",
+                    "name": "课程表",
+                    "code": "course",
+                    "numColumn": 0,
+                    "keys": [
+                        {
+                            "uuid": "ef2a05a063beb46729b219b9d7c41882",
+                            "name": "ID主键",
+                            "code": "id",
+                            "type": "0"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "uuid": "666af04fbdb5a3e2b41b26abd1064b3c",
+                            "order": 1,
+                            "name": "课程名称",
+                            "code": "name",
+                            "type": "2",
+                            "length": 0,
+                            "decimalPoint": 0,
+                            "default": "noname",
+                            "canNull": false
+                        },
+                        {
+                            "uuid": "5212fed875c8693e277423350cd78ce4",
+                            "order": 2,
+                            "name": "上课地址",
+                            "code": "address",
+                            "type": "2",
+                            "length": 0,
+                            "decimalPoint": 0,
+                            "default": "无地址",
+                            "canNull": false
+                        }
+                    ]
+                },
+                {
+                    "uuid": "1747c8bf14158a3bc1b2a6edc84dcd02",
+                    "name": "学生选课表",
+                    "code": "student_course",
+                    "numColumn": 0,
+                    "keys": [
+                        {
+                            "uuid": "485bb180dc1fbcf05145a66e0809fd3e",
+                            "name": "ID主键",
+                            "code": "id",
+                            "type": "0"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "uuid": "ca10f88bee1f9ae01359f0d9f63113b0",
+                            "order": 1,
+                            "name": "学生ID",
+                            "code": "stu_id",
+                            "type": "0",
+                            "length": 0,
+                            "decimalPoint": 0,
+                            "default": "",
+                            "canNull": false
+                        },
+                        {
+                            "uuid": "f08dea6a7a19646df9a420e68b828fb7",
+                            "order": 2,
+                            "name": "课程ID",
+                            "code": "cou_id",
+                            "type": "0",
+                            "length": 0,
+                            "decimalPoint": 0,
+                            "default": "",
+                            "canNull": false
+                        }
+                    ]
+                }
+            ]
+        };
+
+        /**
+         * 列类型
+         * */
+        var columnType = {
+            0: "int",//整形
+            1: "char",//定长字符
+            2: "varchar",//边长字符
+            3: "double",//双精浮点数
+            4: "datetime",//日期时间（不管是日期，还是时间均使用此类型。）
+            5: "text",//大文本
+        };
+        /**
+         * 主键类型
+         * */
+        var keyType = {
+            0: "自增",
+            1: "UUID",
+            2: "程序生成",
+        };
+        /**
+         * Angular
+         */
+        var app = angular.module('myApp', []);
+        app.controller('sssController', function ($scope, $http) {
+            $scope.system = system;
+            $scope.columnType = columnType;
+            $scope.keyType = keyType;
+            $scope.toggleTable = [];
+
+            $scope.sssAddTables = sssAddTables;
+            $scope.sssAddKey = sssAddKey;
+            $scope.sssAddColumn = sssAddColumn;
+            $scope.sssShowData = sssShowData;
+            $scope.sssMove = sssMove;
+            $scope.sssDeleteObjectData = sssDeleteObjectData;
+            $scope.sssDeleteArrayData = sssDeleteArrayData;
+            $scope.sssDeleteArrayData = sssDeleteArrayData;
+        });
+        /**
+         * 添加表格
+         */
+        function sssAddTables(system) {
+            if (angular.isUndefined(system.tables)) {
+                system.tables = [];
+            }
+            var table = {uuid: guid(), name: "新建表" + (system.tables.length + 1), code: "new_table", numColumn: 0};
+            system.tables.push(table);
+        }
+        /**
+         * 添加主键
+         * @param data
+         */
+        function sssAddKey(data) {
+            var keys = data.keys;
+            if (angular.isUndefined(keys)) {
+                keys = [];
+                data.keys = keys;
+            }
+            var key = {uuid: guid(), name: "ID主键", code: "id", type: "0"};
+            keys.push(key);
+        }
+        /**
+         * 添加列
+         * @param data
+         */
+        function sssAddColumn(data) {
+            var columns = data.columns;
+            if (angular.isUndefined(columns)) {
+                columns = [];
+                data.columns = columns;
+            }
+            var col_num = data.columns.length + 1;
+            var col = {
+                uuid: guid(),
+                order: col_num,
+                name: "列名" + col_num,
+                code: "column" + col_num,
+                type: "2",
+                length: 0,
+                decimalPoint: 0,
+                default: "",
+                canNull: false,
+            };
+            columns.push(col);
+        }
+        /**
+         * 移动表的列
+         * @param data
+         */
+        function sssMove(table, column, move) {
+            var newOrder = column.order + move;
+            angular.forEach(table.columns, function (col, index, array) {
+                if (col.order == newOrder) {
+                    col.order = column.order;
+                    column.order = newOrder;
+                    return;
+                }
+            });
+        }
+        /**
+         * 根据index从数组中删除对象
+         */
+        function sssDeleteArrayData(arrayObj, index) {
+            if (confirm("确定删除吗！"))
+                arrayObj.splice(index, 1);
+        }
+        /**
+         * 根据Key删除对象
+         */
+        function sssDeleteObjectData(obj, key) {
+            if (confirm("确定删除吗！"))
+                delete obj[key];
+        }
+        /**
+         * 格式化显示Json数据
+         * @param data
+         */
+        function sssShowData(data) {
+            $('#showSSSJsonCode').html(angular.toJson(data, true));
+            $('#sssModalData').modal();
+        }
+        /**
+         * 生成GUID
+         * @returns {string}
+         */
+        function guid() {
+            function S4() {
+                return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+            }
+
+            return (S4() + S4() + S4() + S4() + S4() + S4() + S4() + S4());
+        }
+    </script>
+</head>
+
+<body>
+<div class="container-fluid col-xs-12" ng-app="myApp" ng-controller="sssController">
+    <div class="row">
+        <div class="col-xs-12 ">
+            <h1 class="text-center">系统名称: {{system.systemName}}</h1>
+            <div class="col-xs-4 col-xs-offset-4"><input ng-model="system.systemName" class="form-control"></div>
+        </div>
+        <div class="col-xs-12 ">
+            <div ng-repeat="table in system.tables" class="panel-group" id="accordion" role="tablist"
+                 aria-multiselectable="true">
+                <div class="panel panel-primary">
+                    <div class="panel-heading" role="tab" id="heading{{$index+1}}">
+                        <h4 class="panel-title text-center">
+                            <button class="btn btn-info btn-xs pull-right"
+                                    ng-click="sssDeleteArrayData(system.tables,$index)">删除
+                            </button>
+                            <a data-toggle="collapse" href="#collapse{{$index+1}}">
+                                表{{$index+1}}:{{table.name}}
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse{{$index+1}}" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <form class="form-inline">
+                                <div class="form-group form-group-sm">
+                                    <label>0.表名:</label>
+                                    <input ng-model="table.name" type="text" class="form-control">
+                                </div>
+                                <div class="form-group form-group-sm">
+                                    <label>代码:</label>
+                                    <input ng-model="table.code" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>注释:</label>
+                                    <input ng-model="table.comment" type="text" class="form-control"
+                                           style="width:60rem;">
+                                </div>
+
+                                <div ng-repeat="key in table.keys" class="form-group form-group-sm">
+                                    <label>{{$index+1}}.键名:</label>
+                                    <input ng-model="key.name" type="text" class="form-control">
+                                    <label>代码:</label>
+                                    <input ng-model="key.code" type="text" class="form-control">
+                                    <label>类型:</label>
+                                    <select ng-model="key.type" ng-options="k as v for (k,v) in keyType"
+                                            class="form-control"></select>
+                                    <div class="form-group">
+                                        <label>注释:</label>
+                                        <input ng-model="key.comment" type="text" class="form-control"
+                                               style="width:50rem;">
+                                    </div>
+                                    <a class="btn btn-info btn-xs"
+                                       ng-click="sssDeleteArrayData(table.keys,$index)">删除
+                                    </a>
+                                </div>
+                                <div class="col-xs-12 ">
+                                    <a class="btn btn-info btn-xs" ng-click="sssAddKey(table)">添加主键</a>
+                                </div>
+                                <div>
+                                    <div ng-repeat="column in table.columns | orderBy:'order'"
+                                         class="form-group form-group-sm">
+
+                                        <label>{{$index+1}}.列名:</label>
+                                        <input ng-model="column.name" type="text" class="form-control"
+                                               style="width: 8rem;">
+                                        <label>代码:</label>
+                                        <input ng-model="column.code" type="text" class="form-control"
+                                               style="width: 8rem;">
+                                        <label>类型:</label>
+                                        <select ng-model="column.type" ng-options="k as v for (k,v) in columnType"
+                                                class="form-control"></select>
+                                        <label>Null:</label>
+                                        <input ng-model="column.canNull" type="checkbox">
+                                        <label>长度:</label>
+                                        <input ng-model="column.length"
+                                               ng-disabled="column.type == 4 || column.type == 5" type="number"
+                                               class="form-control" style="width: 6rem;">
+                                        <label>小数点:</label>
+                                        <input ng-model="column.decimalPoint" ng-disabled="column.type !=3 "
+                                               type="number" class="form-control" style="width: 6rem;">
+                                        <label>默认值:</label>
+                                        <input ng-model="column.default" type="text" class="form-control"
+                                               style="width: 10rem;">
+                                        <div class="form-group">
+                                            <label>注释:</label>
+                                            <input ng-model="column.comment" class="form-control"
+                                                   style="width:23rem;">
+                                        </div>
+                                        <a class="btn btn-info btn-xs" ng-click="sssMove(table,column,-1)" title="上移">
+                                            <span class="glyphicon glyphicon-circle-arrow-up"></span>
+                                        </a>
+                                        <a class="btn btn-info btn-xs" ng-click="sssMove(table,column,1)" title="下移">
+                                            <span class="glyphicon glyphicon-circle-arrow-down"></span>
+                                        </a>
+                                        <a class="btn btn-info btn-xs"
+                                           ng-click="sssDeleteArrayData(table.columns,$index)" title="删除">
+                                            删除
+                                        </a>
+                                    </div>
+                                    <div class="col-xs-12 ">
+                                        <button class="btn btn-info btn-xs" ng-click="sssAddColumn(table)">添加列</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 text-center">
+            <button ng-click="sssAddTables(system)" class="btn btn-info">添加表格</button>
+            <button ng-click="sssShowData(system)" class="btn btn-info">显示数据</button>
+        </div>
+    </div>
+</div>
+
+<!-- 模态框 -->
+<div class="modal fade" id="sssModalData" tabindex="-1" role="dialog" aria-labelledby="sssModalDataLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only text-danger">Close</span></button>
+                <h4 class="modal-title" id="sssModalDataLabel">系统模型json数据</h4>
+            </div>
+            <div class="modal-body">
+                <xmp id="showSSSJsonCode" style="height: 24em;overflow-y: scroll;">
+                </xmp>
+            </div>
+            <div class="modal-footer bg-primary">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
