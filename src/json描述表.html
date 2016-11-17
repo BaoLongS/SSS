@@ -18,24 +18,6 @@
     <!--<script src="js/angular/angular.min.js"></script>-->
 
     <style>
-        select, input[type=text] {
-            width: 8rem;
-        }
-
-        .sss-table {
-            border: solid lightblue;
-        }
-
-        #showSSSJson {
-            width: 100%;
-            height: 100%;
-            overflow-y: auto;
-        }
-
-        #massageDiv {
-            height: 20rem;
-        }
-
         .panel-group {
             margin-bottom: 4px;
         }
@@ -66,6 +48,8 @@
          * */
         var system = {
             "systemName": "学生选课系统",
+            "database": "studentdb",
+            "databaseConventions": "1、名称全部用小写。\n2、名称避免使用mysql关键字。\n3、表名前缀为stu\n4、每张表都有一个ID自增主键列。\n5、除了ID列，所有字段都要设置默认值。\n6、所有字段添加注释信息。",
             "tables": [
                 {
                     "uuid": "ceba4516491cc84042d442f84c29a541",
@@ -351,7 +335,17 @@
     <div class="row">
         <div class="col-xs-12 ">
             <h1 class="text-center">系统名称: {{system.systemName}}</h1>
-            <div class="col-xs-4 col-xs-offset-4"><input ng-model="system.systemName" class="form-control"></div>
+            <form class="form-inline text-center">
+                系统名称:<input ng-model="system.systemName" class="form-control"
+                            style="width: 16rem;">
+                数据库名:<input ng-model="system.database" class="form-control"
+                            style="width: 16rem;">
+            </form>
+        </div>
+        <div class="col-xs-12 text-center">
+            <h3 class="text-center">数据库设计规范</h3>
+            <textarea ng-model="system.databaseConventions" class="form-control center-block"
+                      style="width: 80%;" rows="6"></textarea>
         </div>
         <div class="col-xs-12 ">
             <div ng-repeat="table in system.tables" class="panel-group" id="accordion" role="tablist"
